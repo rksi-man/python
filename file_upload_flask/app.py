@@ -4,6 +4,16 @@ import pandas as pd
 
 app = Flask(__name__)
 
+def get_sample_and_delete(sheet_name):
+  df = data_frame_dict[sheet_name]
+  try:
+    sample_obj = df.sample()
+    data_frame_dict[sheet_name].drop(sample_obj.index, inplace=True)
+    left_rows = len(df.index)
+    return sample_obj, left_rows
+  except:
+    return 'No Data'
+
 @app.route('/')
 def home():
     files_path = 'file_upload_flask/uploaded_files/'
@@ -20,8 +30,23 @@ def home():
 @app.route('/document/<name>')
 def document(name):
     xls = pd.ExcelFile(f'file_upload_flask/uploaded_files/{name}')
-    # data_frame_dict = {}
-    return f'{xls.sheet_names}'
+    sheet_names = xls.sheet_names
+    # return f'{xls.sheet_names}'
+    return render_template('document.html', name=name,sheet_names=sheet_names)
+
+
+@app.route('/document/<name>/sheet/<list>')
+def get_sheet(name,list):
+    files_path = 'file_upload_flask/uploaded_files/'
+    xls = pd.ExcelFile(f'file_upload_flask/uploaded_files/{name}')
+    data_frame_dict = {}
+    for sheet_name in xls.sheet_names:
+        data_frame_dict[sheet_name] = pd.read_excel(xls, sheet_name, index_col=0)
+
+    df = data_frame_dict[list]
+    return df.to_html(header="true", table_id="table")
+    # return f'Путь {name}/{list}'
+
 
 
 @app.route('/upload', methods=['GET','POST'])

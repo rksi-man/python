@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Подложка */
+        }
+
+        header {
+            background-color: #6c757d; /* Цвет шапки */
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto; /* Центрирование */
+            background-color: #ffffff; /* Цвет фона контейнера */
+            padding: 20px;
+            border-radius: 10px; /* Скругление краев */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .left_questions {
+            /* width: 30%; */
+            margin: 0px;
+            padding: 10px;
+            background-color: #6c757d; /* Цвет фона блока вопросов */
+            color: white; /* Цвет текста */
+            border-radius: 5px; /* Скругление краев */
+        }
+
+        .card_content {
+            width: 70%;
+            float: left;
+            padding: 10px;
+            margin: 10%; /* Центрирование */
+        }
+
+        .header {
+            background-color: #adb5bd; /* Цвет заголовка */
+            color: #212529; /* Цвет текста заголовка */
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .question {
+            background-color: #e9ecef; /* Цвет фона вопроса */
+            color: #212529; /* Цвет текста вопроса */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        .refresh-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .refresh-button button {
+            padding: 10px 20px;
+            background-color: #6c757d;;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .refresh-button button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="javascript:history.back()">Go Back</a>
+    </header>
+    <div class="container">
+        <div class="left_questions">
+           Вопросов осталось: {{left}}
+        </div>
+        <div class="card_content">
+            {% for key, el in sheet_list.items() %}
+            <div class="header">
+                {{key}}
+                <div class="question">
+                    {{el}}
+                </div>
+            </div>
+            {% endfor %}
+            <div class="refresh-button">
+                <button onclick="window.location.reload();">Обновить</button>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

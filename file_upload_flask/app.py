@@ -4,15 +4,6 @@ import pandas as pd
 
 app = Flask(__name__)
 
-def get_sample_and_delete(sheet_name):
-  df = data_frame_dict[sheet_name]
-  try:
-    sample_obj = df.sample()
-    data_frame_dict[sheet_name].drop(sample_obj.index, inplace=True)
-    left_rows = len(df.index)
-    return sample_obj, left_rows
-  except:
-    return 'No Data'
 
 @app.route('/')
 def home():

@@ -1,10 +1,28 @@
 from flask import Flask, request, render_template
+import os
+import pandas as pd
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    files_path = 'file_upload_flask/uploaded_files/'
+    list_files = os.listdir(files_path)
+    list_excel = []
+    # Проверка и отбор только файлов .xlsx
+    for i in list_files:
+        if i.endswith('.xlsx'):
+            list_excel.append(i)
+    return render_template('home.html', list_excel=list_excel)
+    # return list_excel
+
+
+@app.route('/document/<name>')
+def document(name):
+    xls = pd.ExcelFile(f'file_upload_flask/uploaded_files/{name}')
+    # data_frame_dict = {}
+    return f'{xls.sheet_names}'
+
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():

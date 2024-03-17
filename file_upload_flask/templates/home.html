@@ -7,5 +7,10 @@
 </head>
 <body>
     <h1>Home page</h1>
+    {% for file in list_excel %}
+        <div class="card">
+            <a href="document/{{file}}">{{file}}</a>
+        </div>
+    {% endfor %}
 </body>
 </html>

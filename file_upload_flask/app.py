@@ -46,11 +46,18 @@ def upload():
     if request.method == 'POST':
         # Сохраняем в переменную файл request.files['file']
         uploaded_file = request.files['file']
-        # Сохраняем файл с его же именем uploaded_file.filename
-        # В папку file_upload_flask/uploaded_files/
-        uploaded_file.save('file_upload_flask/uploaded_files/'+uploaded_file.filename)
-        # Сообщаем пользователю что файл сохранен
-        return 'Файл сохранен!'
+        # 
+        pass_from_client = request.form['pass']
+        admin_password = '88888888'
+        if pass_from_client == admin_password:
+            # 
+            # Сохраняем файл с его же именем uploaded_file.filename
+            # В папку file_upload_flask/uploaded_files/
+            uploaded_file.save('file_upload_flask/uploaded_files/'+uploaded_file.filename)
+            # Сообщаем пользователю что файл сохранен
+            return 'Файл сохранен!'
+        else:
+            return 'Пароль не верный!'
     # Этот return срабатывает на запросах
     # не POST, соответсвтенно только в GET
     return render_template('upload.html')
